@@ -3,7 +3,6 @@ package com.api.vehicles.controllers;
 import java.util.Optional;
 
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.vehicles.dtos.VehiclesTypeDTO;
@@ -29,7 +29,7 @@ import lombok.var;
 
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", methods={RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.GET, RequestMethod.POST} )
 @RequestMapping("vehiclesType")
 public class VehicleTypeController {
 
@@ -41,9 +41,9 @@ public class VehicleTypeController {
 
     @GetMapping
     public ResponseEntity<Page<VehiclesTypeModel>> getAllVehiclesType(
-            @PageableDefault(page = 0, size = 10 ,sort = "VeicleTypeid", direction = Sort.Direction.ASC) 
-            Pageable pageable
-        ){
+        @PageableDefault(page = 0, size = 10 ,sort = "vehicleTypeName", direction = Sort.Direction.ASC) 
+        Pageable pageable
+    ){
         return ResponseEntity.status(HttpStatus.OK).body(vehiclesTypeService.findAll(pageable));
     }
 
